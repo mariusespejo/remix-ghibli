@@ -22,7 +22,7 @@ export type Film = {
 };
 
 export async function getFilms(title?: string | null) {
-  const response = await fetch('https://ghibliapi.herokuapp.com/films');
+  const response = await fetch('https://ghibli.rest/films');
 
   const films: Film[] = await response.json();
 
@@ -33,7 +33,7 @@ export async function getFilms(title?: string | null) {
 
 export async function getFilmById(filmId: string) {
   const response = await fetch(
-    `https://ghibliapi.herokuapp.com/films/${filmId}`
+    `https://ghibli.rest/films?id=${filmId}`
   );
 
   const film: Film = await response.json();
@@ -42,7 +42,7 @@ export async function getFilmById(filmId: string) {
 
   const characters = await Promise.all(
     film.people
-      .filter((url) => url !== 'https://ghibliapi.herokuapp.com/people/')
+      .filter((url) => url !== 'https://ghibli.rest/people/')
       .map((url) => fetch(url).then((res) => res.json()))
   );
 
@@ -51,7 +51,7 @@ export async function getFilmById(filmId: string) {
 
 export async function getFilmCharacter(characterId: string): Promise<FilmCharacter> {
   const response = await fetch(
-    `https://ghibliapi.herokuapp.com/people/${characterId}`
+    `https://ghibli.rest/people?id=${characterId}`
   );
 
   if (!response.ok) {
